@@ -4,12 +4,15 @@ import Image from "next/image";
 import Logo from "./logo";
 import { Input } from "./ui/input"; 
 import { Search } from "lucide-react";
+import Link from "next/link";
 
 export default function Header() {
     return (
-        <header className="fixed top-0 left-0 right-0 flex items-center justify-between px-4 py-2 bg-foreground">
+        <header className="fixed top-0 left-0 right-0 flex items-center justify-between px-4 py-2 bg-foreground z-10">
             <nav className="flex items-center text-background gap-10">
-                <Logo/>            
+                <Link href="/">
+                    <Logo/>    
+                </Link>        
                 <ul className="flex gap-6">
                     <li> Movies </li>
                     <li> TV Shows </li>

@@ -9,16 +9,25 @@ function handleError(error) {
     }
 }
 
-export async function SearchMovies(search : string | "") {
+export async function SearchMovies(search : string | "", page: number, pageSize) {
     const supabase = await createServerSupabaseClient();
 
     const { data, error } = await supabase
         .from('movie')
         .select('*')
         .like('title', `%${search}%`)       
+        .range((page - 1) * pageSize, page * pageSize - 1);
+
+    const hasNextPage = data.length === pageSize;
 
     handleError(error);
-    return data;
+
+    return {
+        data,
+        page,
+        pageSize,
+        hasNextPage        
+    };
 }
 
 export async function GetMovieDetails(movieId: number) {
@@ -31,5 +40,6 @@ export async function GetMovieDetails(movieId: number) {
         .single();
 
     handleError(error);
+
     return data;
 }
